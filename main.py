@@ -1,5 +1,6 @@
 from random import randint
 from workload_generation import gen_parsed_sentence
+from config import config
 import pickle
 
 import logging
@@ -15,12 +16,7 @@ sys.path.append("/home-nfs/langyu/workspace/phrasal-composition-in-transformers/
 
 from workload_generator import bird_preprocess, ppdb_exact_preprocess, ppdb_preprocess, embed_phrase_transformer, embed_phrase_and_truncate
 
-BIRD_PATH = "/home-nfs/langyu/data_folder/BiRD/BiRD.txt"
-PPDB_PATH = "/home-nfs/langyu/data_folder/ppdb-2.0-tldr"
-WIKI_PATH = "/home-nfs/langyu/data_folder/enwiki/enwiki-unidecoded.txt"
-sample_size = 10000
-workload = "bird"
-random_seed = str(randint(10000, 99999))
+
 
 
 def main():
