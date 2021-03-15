@@ -1,6 +1,7 @@
 from random import randint
 from workload_generation import gen_parsed_sentence
 from config import config
+from os import path
 import pickle
 
 import logging
@@ -18,38 +19,37 @@ from workload_generator import bird_preprocess, ppdb_exact_preprocess, ppdb_prep
 
 
 
-
 def main():
     logger.info("parsing evaluation data")
-    if workload == "bird":
-        input_filename, score_dic, score_range, phrase_pos, phrase_text = bird_preprocess(BIRD_PATH, random_seed, -1, normalize=False)
+    if config["workload"] == "bird":
+        input_filename, score_dic, score_range, phrase_pos, phrase_text = bird_preprocess(config["BIRD_PATH"], config["random_seed"], -1, normalize=False)
         phrase_dic = score_dic
-    elif workload == "ppdb":
+    elif config["workload"] == "ppdb":
         input_filename, score_dic, score_range, phrase_pos, phrase_text, samples_dic = \
-            ppdb_preprocess(PPDB_PATH, random_seed, sample_size,
+            ppdb_preprocess(config["PPDB_PATH"], config["random_seed"], config["sample_size"],
                             negative_sampling_mode="half_neg",
                             overlap_threshold=0.5)
         phrase_dic = score_dic
-    elif workload == "ppdb_exact":
-        input_filename, exact_label_dic, phrase_pos, phrase_text = ppdb_exact_preprocess(PPDB_PATH,
-                                                                                         random_seed,
-                                                                                         sample_size)
+    elif config["workload"] == "ppdb_exact":
+        input_filename, exact_label_dic, phrase_pos, phrase_text = ppdb_exact_preprocess(config["PPDB_PATH"],
+                                                                                         config["random_seed"],
+                                                                                         config["sample_size"])
         phrase_dic = exact_label_dic
     else:
-        logger.error("unknown workload: {}".format(workload))
+        logger.error("unknown workload: {}".format(config["workload"]))
     
     logger.info("embedding phrases")
-    if workload == "ppdb_exact":
-        sentence_texts, phrase_text, exact_label_dic = embed_phrase_and_truncate(phrase_dic, phrase_text, WIKI_PATH)
+    if config["workload"] == "ppdb_exact":
+        sentence_texts, phrase_text, exact_label_dic = embed_phrase_and_truncate(phrase_dic, phrase_text, config["WIKI_PATH"])
     else:
-        sentence_texts = embed_phrase_transformer(phrase_dic, phrase_text, WIKI_PATH)
+        sentence_texts = embed_phrase_transformer(phrase_dic, phrase_text, config["WIKI_PATH"])
 
     logger.info("dumping data structures")
-    dump_file = open("./out/phrase_dic_" + random_seed + ".dump", "wb")
+    dump_file = open("./out/phrase_dic_" + config["random_seed"] + ".dump", "wb")
     pickle.dump(phrase_dic, dump_file)
 
     logger.info("parsing sentences")
-    parsed_out_name = "./out/parsed_sentences_" + random_seed + ".txt"
+    parsed_out_name = path.join(config["dump_dir"], "parsed_sentences_" + config["random_seed"] + ".txt")
     gen_parsed_sentence(sentence_texts, out_file=parsed_out_name)
 
 
