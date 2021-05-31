@@ -10,9 +10,10 @@ config = {
     "PPDB_PATH" : path.join(DATA_FOLDER, "ppdb-2.0-tldr"),
     "WIKI_PATH" : path.join(DATA_FOLDER, "enwiki/enwiki-unidecoded.txt"),
     "sample_size" : 10000,
-    "workload" : "bird",
+    "workload" : "ppdb_exact",
     "random_seed" : str(randint(10000, 99999)),
     "out_dir": path.join(WORK_FOLDER, "out/"),
     "vocab_file": "/home-nfs/langyu/rnng/clusters-train-berk.txt",
     "dump_dir": path.join(WORK_FOLDER, "out/"),
+    "emb_dir": path.join(WORK_FOLDER, "emb/"),
 }
