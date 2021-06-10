@@ -88,20 +88,29 @@ def simple_parse(file, vocab, out_file):
     out.close()
 
 
-def parse_sst(raw_sst, parsed_out_dir):
+def parse_sst(raw_sst, parsed_out_dir, index_range=None):
+    # index_range: (lower, upper)
+    # index_range should be [lower, upper)
     raw_in= open(raw_sst, "r")
     sentences = []
     # need to write out both parsed version and original version to generate fine-tuning workload
-    parsed_out = path.join(parsed_out_dir, "parsed_sst.txt")
-    raw_out = open(path.join(parsed_out_dir, "sst_raw_sentence.txt"), "w")
-    for line in raw_in:
-        segments = line.strip().split("|")
-        sentences.append(segments[0])
+    if index_range is None:
+        parsed_file = "parsed_sst.txt"
+    else:
+        start, end = index_range  
+        parsed_file = "parsed_sst_" + str(start) + "_" + str(end) + ".txt"
+
+    parsed_out = path.join(parsed_out_dir, parsed_file)
+    # raw_out = open(path.join(parsed_out_dir, "sst_raw_sentence.txt"), "w")
+    for line_no, line in enumerate(raw_in):
+        if (index_range is None) or ((line_no >= start) and (line_no < end)):
+            segments = line.strip().split("|")
+            sentences.append(segments[0])
 
     gen_parsed_sentence(sentences, parsed_out)
-    for sent in sentences:
-        raw_out.write(sent + "/n")
-    raw_out.close()
+    # for sent in sentences:
+    #     raw_out.write(sent + "/n")
+    # raw_out.close()
 
 
 if __name__ == "__main__":

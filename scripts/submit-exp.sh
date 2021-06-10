@@ -1,3 +1,3 @@
 #!/bin/sh
 
-sbatch -p contrib-cpu-long -c8 -o ../log/$1 ./run-exp.sh
+sbatch -p contrib-cpu-long -c2 -o ../log/$1 ./run-exp.sh

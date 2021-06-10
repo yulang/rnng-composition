@@ -5,12 +5,13 @@ from workload_generation import parse_sst
 from collections import Counter
 import pdb
 
-def generate_parsed_sst():
+def generate_parsed_sst(sent_index_range=None):
+    # index range: [lower, higher)
     raw_sst_file = path.join(config["SST_PATH"], "dictionary.txt")
-    parse_sst(raw_sst_file, config["out_dir"])
+    parse_sst(raw_sst_file, config["out_dir"], sent_index_range)
 
 
-def analyze_parsed_sst(parsed_file, raw_file):
+def analyze_parsed_sst(parsed_file):
     tag_collection = Counter()
     parsed_sst = open(parsed_file, "r")
 
@@ -36,5 +37,5 @@ def analyze_parsed_sst(parsed_file, raw_file):
 
 
 if __name__ == "__main__":
-    generate_parsed_sst()
-    # analyze_parsed_sst()
+    # generate_parsed_sst((200000, 300000))
+    analyze_parsed_sst()

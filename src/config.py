@@ -17,5 +17,5 @@ config = {
     "vocab_file": "/home-nfs/langyu/rnng/clusters-train-berk.txt",
     "dump_dir": path.join(WORK_FOLDER, "out/"),
     "emb_dir": path.join(WORK_FOLDER, "emb/"),
-    # "parsed_sst_path": path.join(WORK_FOLDER, "out/parsed_sst.txt"),
+    "parsed_sst_path": path.join(WORK_FOLDER, "data/sst_full_parsed.txt"),
 }
