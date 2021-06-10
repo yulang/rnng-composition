@@ -15,9 +15,9 @@ def analyze_parsed_sst(parsed_file):
     tag_collection = Counter()
     parsed_sst = open(parsed_file, "r")
 
-    for line in parse_sst:
+    for line in parsed_sst:
         words = line.strip().split()
-        tag = words[0].remove("(")
+        tag = words[0].replace("(", "")
         tag_collection[tag] += 1
 
     # remap the label collections to 5 new labels
@@ -38,4 +38,4 @@ def analyze_parsed_sst(parsed_file):
 
 if __name__ == "__main__":
     # generate_parsed_sst((200000, 300000))
-    analyze_parsed_sst()
+    analyze_parsed_sst(config["parsed_sst_path"])
