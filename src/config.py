@@ -18,4 +18,9 @@ config = {
     "dump_dir": path.join(WORK_FOLDER, "out/"),
     "emb_dir": path.join(WORK_FOLDER, "emb/"),
     "parsed_sst_path": path.join(WORK_FOLDER, "data/sst_full_parsed.txt"),
+    "model_name": "bert",
+    "n_epochs": 3,
+    "print_every": 100,
+    "evaluate_every": 200,
+    "tuned_model_dir": "/home-nfs/langyu/workspace/rnng-composition/out",
 }

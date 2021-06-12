@@ -32,8 +32,14 @@ def analyze_parsed_sst(parsed_file):
         insert_pt += 1
         insert_pt %= 5
 
+    # reverse label mapping
+    reversed_mapping = {}
+    for key, tags in label_mapping.items():
+        for tag in tags:
+            label_mapping[tag] = key
+
     # pdb.set_trace()
-    return label_mapping, remapped_count
+    return reversed_mapping, label_mapping, remapped_count
 
 
 if __name__ == "__main__":
