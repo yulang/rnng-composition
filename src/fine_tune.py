@@ -20,12 +20,12 @@ from train import train_iter
 def main():
     logger.info("init model...")
     pretrained_name = get_pretrained_name(config["model_name"])
-    dump_name = "tuned" + pretrained_name + ".pt"
+    dump_name = "tuned-" + pretrained_name + ".pt"
     model_dump_loc = os.path.join(config["tuned_model_dir"], dump_name)
     raw_sst_loc = os.path.join(config["SST_PATH"], "dictionary.txt")
     num_labels = 5
 
-    train_loader, test_loader = load_parsed_sst(config["parsed_sst_path"], config[])
+    train_loader, test_loader = load_parsed_sst(config["parsed_sst_path"], raw_sst_loc)
     model, tokenizer = load_model(pretrained_name=pretrained_name, load_tuned=False, num_labels=num_labels)
     optimizer = AdamW(model.parameters(), lr=1e-5)
 

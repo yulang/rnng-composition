@@ -36,7 +36,7 @@ def analyze_parsed_sst(parsed_file):
     reversed_mapping = {}
     for key, tags in label_mapping.items():
         for tag in tags:
-            label_mapping[tag] = key
+            reversed_mapping[tag] = key
 
     # pdb.set_trace()
     return reversed_mapping, label_mapping, remapped_count

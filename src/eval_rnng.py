@@ -17,12 +17,13 @@ logging.basicConfig(format = '%(asctime)s - %(levelname)s - %(name)s -   %(messa
 logger = logging.getLogger(__name__)
 
 import sys
+import pdb
 
 sys.path.append("/home-nfs/langyu/workspace/phrasal-composition-in-transformers/src")
 from workload_generator import trivial_score_to_label
 
 # from utilities import analyze_correlation_by_layer
-import pdb
+
 MAX_ITER = 200
 
 

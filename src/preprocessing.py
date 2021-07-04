@@ -3,6 +3,18 @@ from torch.utils import data
 from sklearn.model_selection import train_test_split
 
 
+class EvalDataset(data.Dataset):
+    def __init__(self, sequence_list):
+        self.text_list = sequence_list
+        self.size = len(sequence_list)
+
+    def __getitem__(self, index):
+        return self.text_list[index]
+
+    def __len__(self):
+        return self.size
+
+
 class SentenceDataset(data.Dataset):
     def __init__(self, phrase_len, phrases, labels):
         self.size = 0
@@ -32,7 +44,7 @@ class SentenceDataset(data.Dataset):
         return self.size
 
 
-def load_parsed_sst(parsed_sst_file, raw_sst_file):
+def load_parsed_sst(parsed_sst_file, raw_sst_file, batch_size=32):
     parsed_sst_handler = open(parsed_sst_file, "r")
     raw_sst_handler = open(raw_sst_file)
     phrases, labels = [], []
@@ -49,7 +61,7 @@ def load_parsed_sst(parsed_sst_file, raw_sst_file):
         line = line.strip().split("|")
         phrases.append(line[0])
 
-    phrase_train, phrase_dev, label_train, label_dev = train_test_split(phrases, labels, test_size=0.3)
+    phrase_train, phrase_dev, label_train, label_dev = train_test_split(phrases, labels, test_size=0.15)
     
     train_set = SentenceDataset(None, phrase_train, label_train)
     dev_set = SentenceDataset(None, phrase_dev, label_dev)
